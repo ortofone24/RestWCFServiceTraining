@@ -3,40 +3,73 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        <h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="http://www.asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+        <button onclick="doWork(); return false;">DoWork</button>
+        <button onclick="doSquare(); return false;">DoSquare</button>
+        <input type="text" id="squareValue" style="width: 50px"/>
+        <br/>
+        <br/>
+        <button onclick="doAddValues(); return false;">DoAddValues</button>
+        <input type="text" id="addValue1" style="width: 50px"/>
+        <input type="text" id="addValue2" style="width: 50px"/>
+        <br/>
+        <h5> If You want see the result, please run console (f12)! </h5>
     </div>
+    
+    <script type="text/javascript">
 
-    <div class="row">
-        <div class="col-md-4">
-            <h2>Getting started</h2>
-            <p>
-                ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301948">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Get more libraries</h2>
-            <p>
-                NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301949">Learn more &raquo;</a>
-            </p>
-        </div>
-        <div class="col-md-4">
-            <h2>Web Hosting</h2>
-            <p>
-                You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            </p>
-            <p>
-                <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301950">Learn more &raquo;</a>
-            </p>
-        </div>
-    </div>
+        function doWork() {
+            console.info("Hello");
+
+            $.ajax({
+                url: "Service/Service1.svc/DoWork",
+                type: "GET",
+                dataType: "json",
+                success: function(result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function doSquare() {
+            console.info("Oblicza kwadrat liczby");
+            var value = $("#squareValue").val();
+
+
+            $.ajax({
+                url: "Service/Service1.svc/DoSquare",
+                type: "POST",
+                data: JSON.stringify(value),
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    console.info(result);
+                }
+            });
+        }
+
+        function doAddValues() {
+            console.info("Dodaje dwie liczby");
+            var addValues = {
+                "Value1": $("#addValue1").val(),
+                "Value2": $("#addValue2").val()
+            };
+
+
+            $.ajax({
+                url: "Service/Service1.svc/DoAddValues",
+                type: "POST",
+                data: JSON.stringify(addValues),
+                dataType: "json",
+                contentType: "application/json",
+                success: function(result) {
+                    console.info(result);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+
+    </script>
 
 </asp:Content>
