@@ -1,2 +1,2 @@
 # RestWCFServiceTraining
-My WCF Service Training
+WCF Service Training
